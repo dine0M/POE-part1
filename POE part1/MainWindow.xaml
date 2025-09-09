@@ -17,10 +17,10 @@
         <TabControl FontSize="14" FontWeight="Bold" Grid.Row="0" SelectionChanged="TabControl_SelectionChanged">
 
 
-            <TabItem Header="Lecturer">
+            <TabItem Header="Lecturer"> 
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Height="646" Margin="0,0,-11,0">
                     <StackPanel Margin="20">
-                        <TextBlock Text="Submit Monthly Claim" FontSize="20" 
+                        <TextBlock Text="Submit Monthly Claim" FontSize="20"  
                            FontWeight="Bold" Foreground="#333333" 
                            Margin="0,0,0,20" Height="37"/>
 
@@ -62,7 +62,7 @@
 
                         <TextBlock Text="Claims:" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
                         <DataGrid x:Name="LecturerClaimsDataGrid" Width="853" Height="136" AutoGenerateColumns="False" CanUserAddRows="False">
-                            <DataGrid.Columns>
+                            <DataGrid.Columns> 
                                 <DataGridTextColumn Header="Claim ID" Binding="{Binding ClaimID}" Width="*"/>
                                 <DataGridTextColumn Header="Lecturer ID" Binding="{Binding LecturerID}" Width="*"/>
                                 <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked}" Width="*"/>
@@ -103,8 +103,8 @@
             </TabItem>
 
 
-            <TabItem Header="Academic Manager">
-                <StackPanel Margin="20">
+            <TabItem Header="Academic Manager"> 
+                <StackPanel Margin="20"> 
                     <TextBlock Text="Contract Monthly Claim System" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
                     <DataGrid x:Name="ManagerClaimsDataGrid" Width="834" Height="311" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single">
                         <DataGrid.Columns>
