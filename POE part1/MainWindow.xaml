@@ -7,7 +7,7 @@
         mc:Ignorable="d"
      Title="Contract Monthly Claim System" Height="700" Width="932"
         Background="#F0F0F0">
-    <Grid Margin="10">
+    <Grid Margin="10"> 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
