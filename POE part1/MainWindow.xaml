@@ -78,7 +78,7 @@
 
 
             <TabItem Header="Programme Coordinator">
-                <StackPanel Margin="20">
+                <StackPanel Margin="20"> 
                     <TextBlock FontSize="20" FontWeight="Bold" Margin="0,0,0,20" Height="27"><Run Text="Contract Monthly Claim System"/><LineBreak/><Run/></TextBlock>
                     <TextBlock Text="Pending Claims" FontSize="20" FontWeight="Bold" Foreground="#333333" Margin="0,0,0,10" Height="29"/>
                     <DataGrid x:Name="CoordinatorClaimsDataGrid" Width="827" Height="308" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single">
