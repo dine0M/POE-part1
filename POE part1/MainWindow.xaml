@@ -62,7 +62,7 @@
 
                         <TextBlock Text="Claims:" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
                         <DataGrid x:Name="LecturerClaimsDataGrid" Width="853" Height="136" AutoGenerateColumns="False" CanUserAddRows="False">
-                            <DataGrid.Columns>  
+                            <DataGrid.Columns>   
                                 <DataGridTextColumn Header="Claim ID" Binding="{Binding ClaimID}" Width="*"/>
                                 <DataGridTextColumn Header="Lecturer ID" Binding="{Binding LecturerID}" Width="*"/>
                                 <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked}" Width="*"/>
