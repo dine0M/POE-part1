@@ -31,7 +31,7 @@ namespace POE_part1
             ManagerClaimsDataGrid.ItemsSource = Claims;
         }
 
-        private void RejectClaim_Click(object sender, RoutedEventArgs e)  
+        private void RejectClaim_Click(object sender, RoutedEventArgs e)   
         {
             MessageBox.Show("Claim rejected successfully!");
         }
