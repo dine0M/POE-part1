@@ -5,166 +5,150 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POE_part1" 
         mc:Ignorable="d"
-     Title="Contract Monthly Claim System" Height="700" Width="932"
+        Title="Contract Monthly Claim System" Height="700" Width="932"
         Background="#F0F0F0">
-    <Grid Margin="10"> 
+
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
+        <!-- ✅ Added SelectionChanged here (this is the correct place) -->
         <TabControl FontSize="14" FontWeight="Bold" Grid.Row="0" SelectionChanged="TabControl_SelectionChanged">
 
-
-            <TabItem Header="Lecturer"> 
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="646" Margin="0,0,-11,0">
+            <!-- Lecturer Tab -->
+            <TabItem Header="Lecturer">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="20">
-                        <TextBlock Text="Submit Monthly Claim" FontSize="20"  
-                           FontWeight="Bold" Foreground="#333333" 
-                           Margin="0,0,0,20" Height="37"/>
 
+                        <TextBlock Text="Submit Monthly Claim" FontSize="20" 
+                                   FontWeight="Bold" Foreground="#333333" Margin="0,0,0,20"/>
+
+                        <!-- Claim Form -->
                         <Grid Margin="0,0,0,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions> 
+                            </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5,0">
+                            <StackPanel Grid.Column="0" Margin="5,0">
                                 <TextBlock Text="Lecturer ID:"/>
                                 <TextBox x:Name="LecturerIDTextBox" Height="30"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5,0">
+                            <StackPanel Grid.Column="1" Margin="5,0">
                                 <TextBlock Text="Hours Worked:"/>
                                 <TextBox x:Name="HoursWorkedTextBox" Height="30"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5,0">
+                            <StackPanel Grid.Column="2" Margin="5,0">
                                 <TextBlock Text="Hourly Rate:"/>
                                 <TextBox x:Name="HourlyRateTextBox" Height="30"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="3" Orientation="Vertical" Margin="5,0">
+                            <StackPanel Grid.Column="3" Margin="5,0">
                                 <TextBlock Text="Total Amount:"/>
-                                <TextBox x:Name="TotalAmountTextBox" Height="30" IsReadOnly="True" Background="#DDDDDD"/>
+                                <TextBox x:Name="TotalAmountTextBox" Height="30"
+                                         IsReadOnly="True" Background="#DDDDDD"/>
                             </StackPanel>
                         </Grid>
 
-                        <StackPanel Orientation="Horizontal" Margin="5,0,0,20">
-                            <Button Content="Upload Document" Width="200" Height="35" 
-                            Background="#5A7D9A" Foreground="White" Margin="0,0,10,0"/>
-                            <Button Content="Submit Claim" Width="150" Height="35" 
-                            Background="#5A7D9A" Foreground="White"/>
+                        <!-- Notes Field -->
+                        <StackPanel Margin="5,0,0,10">
+                            <TextBlock Text="Additional Notes:"/>
+                            <TextBox x:Name="NotesTextBox" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
                         </StackPanel>
 
-                        <TextBlock Text="Claims:" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
-                        <DataGrid x:Name="LecturerClaimsDataGrid" Width="853" Height="136" AutoGenerateColumns="False" CanUserAddRows="False">
-                            <DataGrid.Columns>   
+                        <!-- Upload Button -->
+                        <StackPanel Orientation="Horizontal" Margin="5,0,0,20">
+                            <Button Content="Upload Document" Width="200" Height="35"
+                                    Background="#5A7D9A" Foreground="White" 
+                                    Click="OpenUploadDocs"/>
+                            <TextBlock x:Name="UploadedFileNameTextBlock" 
+                                       Text="No file uploaded" Margin="10,5,0,0" Foreground="Gray"/>
+                        </StackPanel>
+
+                        <!-- Submit Button -->
+                        <Button Content="Submit Claim" Width="150" Height="40"
+                                Background="#5A7D9A" Foreground="White"
+                                Click="OpenClaimStatus"/>
+
+                        <!-- Lecturer Claims Table -->
+                        <TextBlock Text="Your Claims:" FontSize="16" FontWeight="Bold" Margin="0,20,0,10"/>
+                        <DataGrid x:Name="LecturerClaimsDataGrid" Width="853" Height="200"
+                                  AutoGenerateColumns="False" CanUserAddRows="False">
+                            <DataGrid.Columns>
                                 <DataGridTextColumn Header="Claim ID" Binding="{Binding ClaimID}" Width="*"/>
                                 <DataGridTextColumn Header="Lecturer ID" Binding="{Binding LecturerID}" Width="*"/>
-                                <DataGridTextColumn Header="Hours Worked" Binding="{Binding HoursWorked}" Width="*"/>
-                                <DataGridTextColumn Header="Hourly Rate" Binding="{Binding HourlyRate}" Width="*"/>
                                 <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount}" Width="*"/>
                                 <DataGridTextColumn Header="Date Submitted" Binding="{Binding DateSubmitted}" Width="*"/>
                                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+                                <DataGridTemplateColumn Header="Progress" Width="150">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ProgressBar Minimum="0" Maximum="3"
+                                                         Value="{Binding StatusProgress}" Height="20"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
 
+            
+            <TabItem Header="Academic Manager">
+                <StackPanel Margin="20">
+                    <TextBlock Text="Pending Claims" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+                    <DataGrid x:Name="CoordinatorClaimsDataGrid" Width="827" Height="300"
+                              AutoGenerateColumns="False" CanUserAddRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Claim ID" Binding="{Binding ClaimID}" Width="*"/>
+                            <DataGridTextColumn Header="Lecturer ID" Binding="{Binding LecturerID}" Width="*"/>
+                            <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount}" Width="*"/>
+                            <DataGridTextColumn Header="Date Submitted" Binding="{Binding DateSubmitted}" Width="*"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+                            <DataGridTemplateColumn Header="Action" Width="180">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Content="Approve" Width="80" Height="25"
+                                                    Background="#4CAF50" Foreground="White"
+                                                    CommandParameter="{Binding}" 
+                                                    Click="OpenManagerDashboard_Click"/>
+                                          
+                                            <Button Content="Reject" Width="80" Height="25"
+                                                    Background="#F44336" Foreground="White"
+                                                    Margin="5,0,0,0" CommandParameter="{Binding}"
+                                                    Click="RejectClaim_Click"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </TabItem>
 
+           
             <TabItem Header="Programme Coordinator">
-                <StackPanel Margin="20"> 
-                    <TextBlock FontSize="20" FontWeight="Bold" Margin="0,0,0,20" Height="27"><Run Text="Contract Monthly Claim System"/><LineBreak/><Run/></TextBlock>
-                    <TextBlock Text="Pending Claims" FontSize="20" FontWeight="Bold" Foreground="#333333" Margin="0,0,0,10" Height="29"/>
-                    <DataGrid x:Name="CoordinatorClaimsDataGrid" Width="827" Height="308" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single">
+                <StackPanel Margin="20">
+                    <TextBlock Text="All Claims" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+                    <DataGrid x:Name="ManagerClaimsDataGrid" Width="834" Height="311"
+                              AutoGenerateColumns="False" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Claim ID" Binding="{Binding ClaimID}" Width="*"/>
                             <DataGridTextColumn Header="Lecturer ID" Binding="{Binding LecturerID}" Width="*"/>
-                            <DataGridTextColumn Header="Date Submitted" Binding="{Binding DateSubmitted}" Width="*"/>
                             <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount}" Width="*"/>
+                            <DataGridTextColumn Header="Date Submitted" Binding="{Binding DateSubmitted}" Width="*"/>
                             <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
-                            <DataGridTemplateColumn Header="Details" Width="120">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="View Details" Width="100" Height="28" 
-                            Background="#5A7D9A" Foreground="White" 
-                            CommandParameter="{Binding}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
             </TabItem>
-
-
-            <TabItem Header="Academic Manager">  
-                <StackPanel Margin="20"> 
-                    <TextBlock Text="Contract Monthly Claim System" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
-                    <DataGrid x:Name="ManagerClaimsDataGrid" Width="834" Height="311" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Claim ID" Binding="{Binding ClaimID}" Width="*"/>
-                            <DataGridTextColumn Header="Lecturer ID" Binding="{Binding LecturerID}" Width="*"/>
-                            <DataGridTextColumn Header="Date Submitted" Binding="{Binding DateSubmitted}" Width="*"/>
-                            <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount}" Width="*"/>
-                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
-                            <DataGridTemplateColumn Header="Details" Width="120">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="View Details" Width="100" Height="28" 
-                                        Background="#5A7D9A" Foreground="White" 
-                                        CommandParameter="{Binding}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <Button Content="Approve Claim" Width="150" Height="35" Background="#5A7D9A" Foreground="White" Margin="0,0,10,0"/>
-                        <Button Content="Reject Claim" Width="150" Height="35" Background="#888888" Foreground="White"/>
-                    </StackPanel>
-                </StackPanel>
-            </TabItem>
-
         </TabControl>
-
-
-        <Border Grid.Row="1" Margin="0,20,0,0" Padding="15" Background="White" CornerRadius="10" BorderBrush="#CCCCCC" BorderThickness="1" Visibility="Collapsed" x:Name="ClaimDetailsPanel">
-            <StackPanel>
-                <TextBlock Text="Claim Details" FontSize="20" FontWeight="Bold" Foreground="#333333" Margin="0,0,0,20"/>
-                <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="Claim ID:" FontWeight="Bold" Width="150"/>
-                    <TextBlock x:Name="ClaimIDTextBlock"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="Lecturer ID:" FontWeight="Bold" Width="150"/>
-                    <TextBlock x:Name="LecturerIDTextBlock"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="Status:" FontWeight="Bold" Width="150"/>
-                    <TextBlock x:Name="StatusTextBlock"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="Date Submitted:" FontWeight="Bold" Width="150"/>
-                    <TextBlock x:Name="DateSubmittedTextBlock"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="Total Amount:" FontWeight="Bold" Width="150"/>
-                    <TextBlock x:Name="TotalAmountTextBlock"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Text="Attached File:" FontWeight="Bold" Width="150"/>
-                    <TextBlock x:Name="AttachedFileTextBlock"/>
-                </StackPanel>
-                <Button Content="Close" Width="100" Height="30" Margin="0,20,0,0" 
-                HorizontalAlignment="Center"
-                Background="#5A7D9A" Foreground="White"/>
-            </StackPanel>
-        </Border>
     </Grid>
 </Window>
